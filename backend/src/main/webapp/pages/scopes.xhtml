@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+	<ui:composition template="/templates/basic.xhtml">
+		<ui:define name="header">
+			Example JSF Bean Scopes
+		</ui:define>
+		<ui:define name="content">
+			<h:form>
+				<h:panelGrid columns="3">
+					<f:facet name="header">Scope Beans</f:facet>
+					<h:outputText value="Request:"/>
+					<h:outputText value="#{requestBean.counter}"/>
+					<h:commandButton value="Increment" action="#{requestBean.incrementCounter()}"/>
+					<h:outputText value="View:"/>
+					<h:outputText value="#{viewBean.counter}"/>
+					<h:commandButton value="Increment" action="#{viewBean.incrementCounter()}"/>
+					<h:outputText value="Session:"/>
+					<h:outputText value="#{sessionBean.counter}"/>
+					<h:commandButton value="Increment" action="#{sessionBean.incrementCounter()}"/>
+					<h:outputText value="Application:"/>
+					<h:outputText value="#{applicationBean.counter}"/>
+					<h:commandButton value="Increment" action="#{applicationBean.incrementCounter()}"/>
+					<f:facet name="footer">
+						<h:panelGroup style="display:block; text-align:center">
+							<h:outputText value="Current Total: #{requestBean.counter + viewBean.counter + sessionBean.counter + applicationBean.counter}"/>
+						</h:panelGroup>
+					</f:facet>
+				</h:panelGrid>
+				
+				<h:commandLink action="home" value="Home" />
+				
+			</h:form>
+		</ui:define>
+		<ui:define name="footer">
+			Example JSF Bean Scopes Footer
+		</ui:define>
+	
+	</ui:composition>
+	
+</html>

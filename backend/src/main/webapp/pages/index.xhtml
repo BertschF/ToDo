@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="/templates/basic.xhtml">
+
+	<ui:define name="title">#{msgs['index.title']}</ui:define>
+
+	<ui:define name="header">#{msgs['index.header']}</ui:define>
+
+	<ui:define name="content">
+
+		<p>Hello World</p>
+
+		<ui:remove>See https://showcase.bootsfaces.net/</ui:remove>
+
+		<b:dataTable value="#{personDemoDataBean.demoData}" var="p">
+			<b:dataTableColumn value="#{p.givenName}" />
+			<b:dataTableColumn value="#{p.familyName}" />
+			<b:dataTableColumn value="#{p.yearOfBirth}" label="year of birth" />
+			<b:dataTableColumn value="#{p.email}" label="email" />
+		</b:dataTable>
+
+		<h:form id="personform">
+			<h:inputText
+				value="{&quot;givenName&quot;:&quot;&quot;,&quot;familyName&quot;:&quot;&quot;,&quot;yearOfBirth&quot;:,&quot;email&quot;:&quot;@example.org&quot;}"
+				id="personJson" size="80" />
+			<h:button value="Create new person" update="personform"
+				onclick="addPerson();return true;" />
+		</h:form>
+
+		<p>Hello INF16</p>
+
+		<f:verbatim>
+			<script type="text/javascript">
+			  function addPerson()
+			  {
+				  $.ajax({
+					  url: '#{request.contextPath}/rest/person/new', 
+					  type:'POST', 
+					  data: document.getElementById('personform:personJson').value, 
+					  contentType:'application/json',
+					  success: function(data){
+						  //location.reload();
+						  location.href = location.href;
+					  }
+					});
+			  }
+			</script>
+		</f:verbatim>
+
+
+	</ui:define>
+
+</ui:composition>
+
+</html>
