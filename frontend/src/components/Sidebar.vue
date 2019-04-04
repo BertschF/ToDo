@@ -1,20 +1,19 @@
 <template lang="pug">
-  b-nav.wrapper(vertical='').bg-dark.w-25
-    b-nav-item(active='') 
-      i.pr-2.fas.fa-calendar-day
-      | Heute
-    b-nav-item
-      i.pr-2.fas.fa-calendar-week
-      | Nächste 7 Tage
-    b-nav-item
-      i.pr-2.fas.fa-stream
-      | Alle
-    hr
-    span Projekte
-    hr
-    span Etiketten
-    hr
+  b-nav.wrapper(vertical='').w-25
+    b-nav-item(active='', to='today') Heute
+    b-nav-item(to='upcoming') Nächste 7 Tage
+    b-nav-item(to='all') Alle
 </template>
 
 <style scoped lang="scss">
+  .nav-link {
+    color: green;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+
+  .router-link-active {
+    background-color: green;
+    color: white;
+  }
 </style>
