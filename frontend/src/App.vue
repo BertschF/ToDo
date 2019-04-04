@@ -1,7 +1,7 @@
 <template lang="pug">
   #app
     Header()
-    .d-flex
+    .d-flex.container
       Sidebar()
       router-view
 </template>
