@@ -4,7 +4,7 @@
     b-nav-item(to='upcoming') Nächste 7 Tage
     b-nav-item(to='all') Alle
 </template>
-q
+
 <style scoped lang="scss">
   .nav-link {
     color: green;
