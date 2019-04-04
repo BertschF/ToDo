@@ -1,7 +1,7 @@
 <template lang="pug">
   #app
     Header()
-    .d-flex.container
+    .d-flex.container.mt-2
       Sidebar()
       .bg-light.w-100
         router-view
