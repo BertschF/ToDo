@@ -3,7 +3,8 @@
     Header()
     .d-flex.container
       Sidebar()
-      router-view
+      .bg-light.w-100
+        router-view
 </template>
 
 <script lang="ts">
