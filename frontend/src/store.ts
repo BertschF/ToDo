@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import { ITag } from './model/tag';
-import { IProject } from './model/project';
-import { ITask } from './model/task';
-import { sameDay, before, addDays } from './services/date';
-import { State } from './model/state';
+import {ITag} from './model/tag';
+import {IProject} from './model/project';
+import {ITask} from './model/task';
+import {addDays, before, sameDay} from './services/date';
+import {State} from './model/state';
 
 Vue.use(Vuex);
 
@@ -17,6 +17,24 @@ export default new Vuex.Store({
         id: '129sug9asdfio',
         description: 'Backend API implementieren',
         state: State.Open,
+      },
+      {
+        id: '123541',
+        description: 'overdue task',
+        state: State.Open,
+        dueDate: new Date(2017, 1, undefined, 14),
+      },
+      {
+        id: '653',
+        description: 'Due Today',
+        state: State.Open,
+        dueDate: new Date(),
+      },
+      {
+        id: '156442',
+        description: 'Due Tomorrow',
+        state: State.Open,
+        dueDate: addDays(new Date(), 1),
       },
     ] as ITask[],
     projects: new Array<IProject>(),
