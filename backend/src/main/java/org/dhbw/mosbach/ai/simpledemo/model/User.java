@@ -3,6 +3,7 @@ package org.dhbw.mosbach.ai.simpledemo.model;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class User {
+    private ID id;
     private String userName;
     private String email;
     private String profilePicture;
@@ -10,11 +11,16 @@ public class User {
     private int score;
 
     public User(String userName, int score, String email, String profilePicture, String password) {
+        this.id = new ID();
         this.userName = userName;
-        this.score = score;
+        this.score = score; //
         this.email = email;
         this.profilePicture = profilePicture;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt(12));
+    }
+
+    public String getId() {
+        return id.getId();
     }
 
     public String getUserName() {
