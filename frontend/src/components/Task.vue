@@ -10,6 +10,7 @@ import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { ITask } from '@/model/task';
 import { State } from '../model/state';
+import { parseTaskString } from '@/services/task-creator';
 
 @Component
 export default class TaskComponent extends Vue {
@@ -21,6 +22,7 @@ export default class TaskComponent extends Vue {
   }
 
   private toggleFinished() {
+    console.log(parseTaskString('Morgen an Bizep-Curls erinnern #Health @Training @Bizeps Voll wichtig :P'));
     const nextState = this.task.state === State.Finished ? State.Open : State.Finished;
     this.$store.dispatch({type: 'changeTaskState', payload: {id: this.task.id, state: nextState}});
   }
