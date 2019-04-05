@@ -1,15 +1,16 @@
 <template lang="pug">
   #app
     Header()
-    .d-flex
+    .d-flex.container.mt-2
       Sidebar()
-      router-view
+      .bg-light.w-100
+        router-view
 </template>
 
 <script lang="ts">
   import {Component, Vue} from 'vue-property-decorator';
-  import Header from '@/components/Header.vue';
-  import Sidebar from '@/components/Sidebar.vue';
+  import Header from './components/Header.vue';
+  import Sidebar from './components/Sidebar.vue';
 
   @Component({
     components: {

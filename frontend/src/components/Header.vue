@@ -1,7 +1,8 @@
 <template lang="pug">
-  b-nav
-    b-nav-item Logo
-    b-nav-item Suche
-    b-nav-item Score
-    b-nav-item Einstellung
-</template>
+  .bg-dark
+    nav.navbar.navbar-dark.container
+      a.navbar-brand Navbar
+      form.form-inline
+        input.form-control.mr-sm-2(type='search', placeholder='Search', aria-label='Search')
+        button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
+</template> 
