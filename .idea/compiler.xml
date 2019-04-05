@@ -13,4 +13,7 @@
       <module name="simpledemo" target="11" />
     </bytecodeTargetLevel>
   </component>
+  <component name="TypeScriptCompiler">
+    <option name="showAllErrors" value="true" />
+  </component>
 </project>

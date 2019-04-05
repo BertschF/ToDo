@@ -9,7 +9,7 @@
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import { ITask } from '@/model/task';
-import { State } from '../model/state';
+import { State } from '@/model/state';
 import { parseTaskString } from '@/services/task-creator';
 
 @Component
