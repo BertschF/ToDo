@@ -1,8 +1,7 @@
 <template lang="pug">
-  .task.d-inline
-    input(type='checkbox' @click="toggleFinished()" :checked="checked")
-    span(v-text="task.description")
-
+  .task.ml-4.mb-2(:class="{ finished: checked }")
+    b-form-checkbox.d-inline-block(@click="toggleFinished()" v-model="checked")
+    span(v-text="task.description" )
 </template>
 
 <script lang="ts">
@@ -21,10 +20,22 @@ export default class TaskComponent extends Vue {
     return this.task.state === State.Finished;
   }
 
-  private toggleFinished() {
+  set checked(value: boolean) {
     console.log(parseTaskString('Morgen an Bizep-Curls erinnern #Health @Training @Bizeps Voll wichtig :P'));
-    const nextState = this.task.state === State.Finished ? State.Open : State.Finished;
-    this.$store.dispatch({type: 'changeTaskState', payload: {id: this.task.id, state: nextState}});
+    const oldState = value ? State.Open : State.Finished;
+    const nextState = oldState === State.Finished ? State.Open : State.Finished;
+
+    // replace this with the store dispatch/commit/whatever
+    this.task.state = nextState;
+    // dispatching like this does not work
+    // this.$store.dispatch({type: 'changeTaskState', payload: {id: this.task.id, state: nextState}});
   }
 }
 </script>
+
+<style lang="scss">
+  .finished {
+    text-decoration: line-through;
+    color: #666666;
+  }
+</style>

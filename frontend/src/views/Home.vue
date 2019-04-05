@@ -17,30 +17,35 @@ import { ITask } from '@/model/task';
 })
 export default class Home extends Vue {
 
-  private tasks: ITask[] = this.$store.getters.todayTasks;
+  private tasks: ITask[] = [];
+
+  private mounted() {
+    this.tasks = this.loadTasks(this.$route);
+  }
 
   @Watch('$route')
   private onPropertyChanged(value: Route, oldValue: Route) {
-    const path = value.path;
+    this.tasks = this.loadTasks(value);
+  }
 
+  private loadTasks(route: Route): ITask[] {
+    const path = route.path;
     switch (path) {
       case '/': {
-        this.tasks = this.$store.getters.todayTasks;
-        break;
+        return this.$store.getters.todayTasks;
       }
       case '/today': {
-        this.tasks = this.$store.getters.todayTasks;
-        break;
+        return this.$store.getters.todayTasks;
       }
       case '/all': {
-        this.tasks = this.$store.getters.overDueTasks.concat(this.$store.getters.openTasks);
-        break;
+        return this.$store.getters.overDueTasks.concat(this.$store.getters.openTasks);
       }
       case '/upcoming': {
-        this.tasks = this.$store.getters.next7DaysTasks;
-        break;
+        return this.$store.getters.next7DaysTasks;
       }
-
+      default: {
+        return [];
+      }
     }
   }
 }
