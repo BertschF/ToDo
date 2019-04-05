@@ -1,6 +1,6 @@
 <template lang="pug">
   .task
-    input(type='checkbox' @click="toggleFinished()" :checked="task.finished === finished")
+    input(type='checkbox' @click="toggleFinished()" :checked="checked")
     p(v-text="task.description")
 
 </template>
@@ -16,11 +16,13 @@ export default class TaskComponent extends Vue {
   @Prop()
   public task!: ITask;
 
-  public finished = State.Finished;
+  get checked() {
+    return this.task.state === State.Finished;
+  }
 
   private toggleFinished() {
-    this.$set(this.task, 'finished', State.Finished);
-    // api call with this.task.id
+    const nextState = this.task.state === State.Finished ? State.Open : State.Finished;
+    this.$store.dispatch({type: 'changeTaskState', payload: {id: this.task.id, state: nextState}});
   }
 }
 </script>
