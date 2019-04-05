@@ -1,7 +1,7 @@
 <template lang="pug">
-  .task
+  .task.d-inline
     input(type='checkbox' @click="toggleFinished()" :checked="checked")
-    p(v-text="task.description")
+    span(v-text="task.description")
 
 </template>
 
@@ -26,9 +26,3 @@ export default class TaskComponent extends Vue {
   }
 }
 </script>
-
-<style lang="scss">
-.task p {
-  display: inline-block;
-}
-</style>
