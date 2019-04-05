@@ -1,8 +1,6 @@
 <template lang="pug">
   .home
-    Task(:task="getTask()")
-    Task(:task="getTask()")
-    Task(:task="getTask()")
+    Task(v-for="task in tasks" :key="task.id" :task="task")
 
 </template>
 
@@ -19,12 +17,8 @@ import { State } from '../model/state';
   },
 })
 export default class Home extends Vue {
-  public getTask(): ITask {
-    return {
-      id: '1',
-      state: State.Open,
-      description: 'Lala',
-    };
+  get tasks(): ITask[] {
+    return this.$store.getters.openTasks;
   }
 
   @Watch('$route')
