@@ -33,9 +33,14 @@ export default new Vuex.Store({
       .filter((task: ITask) => before(task.dueDate, addDays(new Date(Date.now()), 7))),
   },
   mutations: {
-
+    changeTaskState(state, payload) {
+      state.tasks[payload.taskId] = payload.state;
+    },
   },
   actions: {
-
+    changeTaskState(context, payload) {
+      // HTTP Request here
+      context.commit('changeTaskState', payload);
+    },
   },
 });
