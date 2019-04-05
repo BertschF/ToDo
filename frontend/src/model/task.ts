@@ -5,7 +5,7 @@ export interface ITask {
     id: string;
     description: string;
     state: State;
-    dueDate?: string;
+    dueDate?: Date;
     repetitionType?: string;
     priority?: Priority;
     projectId?: string;
