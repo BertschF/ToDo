@@ -2,9 +2,7 @@ import { IProject } from './../model/project';
 import { ITag } from './../model/tag';
 import { addDays } from './date';
 
-type TResult = ICreation | string;
-
-function initIdentifiers(): Map<string, TResult> {
+function initIdentifiers(): Map<string, ICreation> {
     const result = new Map();
 
     result.set('morgen', new CreationDate(addDays(new Date(Date.now()), 1)));
@@ -16,9 +14,9 @@ function initIdentifiers(): Map<string, TResult> {
     return result;
 }
 
-export function parseTaskString(s: string): TResult[] {
+export function parseTaskString(s: string): ICreation[] {
     const identifier = initIdentifiers();
-    const result: TResult[] = [];
+    const result: ICreation[] = [];
 
     let leftOver = s.toLowerCase();
     let lowestIndex = -1;
@@ -38,26 +36,36 @@ export function parseTaskString(s: string): TResult[] {
         });
 
         if (lowestIndex !== Number.MAX_SAFE_INTEGER) {
-            result.push(leftOver.substring(0, lowestIndex));
-            result.push(identifier.get(lowestKey) as TResult);
+            result.push(new CreationText(leftOver.substring(0, lowestIndex)));
+            result.push(identifier.get(lowestKey) as ICreation);
             leftOver = leftOver.substring(lowestIndex + lowestKey.length);
         }
 
     }
 
-    result.push(leftOver);
+    result.push(new CreationText(leftOver));
 
     return result;
 }
 
-enum CreationType {
-    Date, Project, Tag,
+export enum CreationType {
+    Date, Project, Tag, Text,
 }
 
 interface ICreation {
     readonly type: CreationType;
 }
 
+class CreationText implements ICreation {
+    public readonly type = CreationType.Text;
+    public readonly text: string;
+
+    constructor(text: string) {
+        this.text = text;
+    }
+}
+
+// tslint:disable-next-line: max-classes-per-file
 class CreationDate implements ICreation {
     public readonly type = CreationType.Date;
     public readonly date: Date;
