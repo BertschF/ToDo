@@ -2,16 +2,16 @@ import { IProject } from './../model/project';
 import { ITag } from './../model/tag';
 import { addDays } from './date';
 
-type TResult = ITag | IProject | Date | string;
+type TResult = ICreation | string;
 
 function initIdentifiers(): Map<string, TResult> {
     const result = new Map();
 
-    result.set('morgen', addDays(new Date(Date.now()), 1));
-    result.set('heute', new Date(Date.now()));
-    result.set('#health', { id: '123', name: 'health', color: 'blue' } as IProject);
-    result.set('@training', { id: '1223', name: 'training', color: 'yellow' } as ITag);
-    result.set('@bizeps', { id: '1234', name: 'bizeps', color: 'green' } as ITag);
+    result.set('morgen', new CreationDate(addDays(new Date(Date.now()), 1)));
+    result.set('heute', new CreationDate(new Date()));
+    result.set('#health', new CreationProject({ id: '123', name: 'health', color: 'blue' }));
+    result.set('@training', new CreationTag({ id: '1223', name: 'training', color: 'yellow' }));
+    result.set('@bizeps', new CreationTag({ id: '1234', name: 'bizeps', color: 'green' }));
 
     return result;
 }
@@ -48,4 +48,41 @@ export function parseTaskString(s: string): TResult[] {
     result.push(leftOver);
 
     return result;
+}
+
+enum CreationType {
+    Date, Project, Tag,
+}
+
+interface ICreation {
+    readonly type: CreationType;
+}
+
+class CreationDate implements ICreation {
+    public readonly type = CreationType.Date;
+    public readonly date: Date;
+
+    constructor(date: Date) {
+        this.date = date;
+    }
+}
+
+// tslint:disable-next-line: max-classes-per-file
+class CreationProject implements ICreation {
+    public readonly type = CreationType.Project;
+    public readonly project: IProject;
+
+    constructor(project: IProject) {
+        this.project = project;
+    }
+}
+
+// tslint:disable-next-line: max-classes-per-file
+class CreationTag implements ICreation {
+    public readonly type = CreationType.Tag;
+    public readonly tag: ITag;
+
+    constructor(tag: ITag) {
+        this.tag = tag;
+    }
 }
