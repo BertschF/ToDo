@@ -21,7 +21,6 @@ export default class TaskComponent extends Vue {
   }
 
   set checked(value: boolean) {
-    console.log(parseTaskString('Morgen an Bizep-Curls erinnern #Health @Training @Bizeps Voll wichtig :P'));
     const oldState = value ? State.Open : State.Finished;
     const nextState = oldState === State.Finished ? State.Open : State.Finished;
 
