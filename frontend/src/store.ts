@@ -12,53 +12,54 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     // tasks: new Array<ITask>(),
-    tasks: [
-      {
+    tasks: new Map<string, ITask>([
+      ['129sug9asdfio', {
         id: '129sug9asdfio',
         description: 'Backend API implementieren',
         state: State.Open,
-      },
-      {
+      }],
+      ['123541', {
         id: '123541',
         description: 'overdue task',
         state: State.Open,
         dueDate: new Date(2017, 1, undefined, 14),
-      },
-      {
+      }],
+      ['653', {
         id: '653',
         description: 'Due Today',
         state: State.Open,
         dueDate: new Date(),
-      },
-      {
+      }],
+      ['156442', {
         id: '156442',
         description: 'Due Tomorrow',
         state: State.Open,
         dueDate: addDays(new Date(), 1),
-      },
-    ] as ITask[],
+      }],
+    ]),
     projects: new Array<IProject>(),
     tags: new Array<ITag>(),
   },
   getters: {
-    openTasks: (state): ITask[] => state.tasks
-      .filter((task) => task.state === State.Open),
+    tasks: (state): ITask[] => Array.from(state.tasks.values()),
+    openTasks: (_, getters) => getters.tasks
+      .filter((task: ITask) => task.state === State.Open),
     overDueTasks: (_, getters) => getters.openTasks
-      .filter((task: ITask) => before(task.dueDate, new Date(Date.now()))),
+      .filter((task: ITask) => before(task.dueDate, new Date())),
     todayTasks: (_, getters) => getters.openTasks
-      .filter((task: ITask) => sameDay(task.dueDate, new Date(Date.now()))),
+      .filter((task: ITask) => sameDay(task.dueDate, new Date())),
     next7DaysTasks: (_, getters) => getters.openTasks
-      .filter((task: ITask) => before(task.dueDate, addDays(new Date(Date.now()), 7))),
+      .filter((task: ITask) => before(task.dueDate, addDays(new Date(), 7))),
   },
   mutations: {
     changeTaskState(state, payload) {
-      state.tasks[payload.taskId] = payload.state;
+      (state.tasks.get(payload.taskId) as ITask).state = payload.state;
     },
   },
   actions: {
     changeTaskState(context, payload) {
       // HTTP Request here
-      context.commit('changeTaskState', payload);
+      context.commit('changeTaskState', payload.payload);
     },
   },
 });

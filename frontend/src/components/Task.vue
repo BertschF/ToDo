@@ -25,10 +25,7 @@ export default class TaskComponent extends Vue {
     const oldState = value ? State.Open : State.Finished;
     const nextState = oldState === State.Finished ? State.Open : State.Finished;
 
-    // replace this with the store dispatch/commit/whatever
-    this.task.state = nextState;
-    // dispatching like this does not work
-    // this.$store.dispatch({type: 'changeTaskState', payload: {id: this.task.id, state: nextState}});
+    this.$store.dispatch({type: 'changeTaskState', payload: {taskId: this.task.id, state: nextState}});
   }
 }
 </script>
