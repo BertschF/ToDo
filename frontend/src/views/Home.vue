@@ -1,5 +1,6 @@
 <template lang="pug">
   .home
+    TaskCreation
     Task(v-for="task in tasks" :key="task.id" :task="task")
 
 </template>
@@ -8,11 +9,13 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { Route } from 'vue-router';
 import Task from '@/components/Task.vue';
+import TaskCreation from '@/components/task_creation/TaskCreation.vue';
 import { ITask } from '@/model/task';
 
 @Component({
   components: {
     Task,
+    TaskCreation,
   },
 })
 export default class Home extends Vue {
