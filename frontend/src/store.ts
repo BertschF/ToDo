@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
+import Vuex, {ActionPayload} from 'vuex';
 
 import {ITag} from './model/tag';
 import {IProject} from './model/project';
@@ -55,11 +55,18 @@ export default new Vuex.Store({
     changeTaskState(state, payload) {
       (state.tasks.get(payload.taskId) as ITask).state = payload.state;
     },
+    createTask(state, payload: ITask) {
+      // works, but the list inside Home.vue is not updated. Need to investigate.
+      state.tasks.set(payload.id, payload);
+    },
   },
   actions: {
-    changeTaskState(context, payload) {
+    changeTaskState(context, payload: ActionPayload) {
       // HTTP Request here
       context.commit('changeTaskState', payload.payload);
+    },
+    createTask(context, payload: ActionPayload) {
+      context.commit('createTask', payload.payload as ITask);
     },
   },
 });

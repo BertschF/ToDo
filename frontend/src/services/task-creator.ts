@@ -1,6 +1,6 @@
-import { IProject } from './../model/project';
-import { ITag } from './../model/tag';
-import { addDays } from './date';
+import {IProject} from '@/model/project';
+import {ITag} from '@/model/tag';
+import {addDays} from './date';
 
 function initIdentifiers(): Map<string, ICreation> {
     const result = new Map();
@@ -52,11 +52,11 @@ export enum CreationType {
     Date, Project, Tag, Text,
 }
 
-interface ICreation {
+export interface ICreation {
     readonly type: CreationType;
 }
 
-class CreationText implements ICreation {
+export class CreationText implements ICreation {
     public readonly type = CreationType.Text;
     public readonly text: string;
 
