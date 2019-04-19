@@ -15,6 +15,16 @@
         p.project-list-title.mb-2 Projekte
         b-nav-item(v-for="project in projects" :key="project.id" :to="{name: 'project', params: {id: project.id}}") {{ project.name }}
 
+      b-button.mt-2(v-if="!newProjectFormVisible" variant="secondary" @click="showNewProjectForm()") Projekt Hinzufügen
+      .mt-2.new-project-form
+        input(v-model="newProjectColor" type='color')
+        input.mb-1(v-model.trim="newProjectName" type="text" maxlength="20")
+        b-button(variant="primary" @click="createNewProject()" :disabled="newProjectName && newProjectName.length === 0") Hinzufügen
+        b-button(variant="tertiary" @click="abortNewProject()") Abbrechen
+
+      // Irgendwas ist hier faul... Der Hinzufüge-button (das :disabled) wird erst nach Verlassen des Input-Fields aktualisiert. Geht in TaskCreation.
+      // v-if="!newProjectFormVisible" geht gar nicht.
+
 </template>
 
 <script lang="ts">
@@ -23,6 +33,10 @@
   import {ITask} from '@/model/task';
 
   export default class Sidebar extends Vue {
+    private newProjectFormVisible: boolean = false;
+    private newProjectName: string = '';
+    private newProjectColor: string = '#e66465';
+
     get todayTasksAmount(): ITask[] {
       return this.$store.getters.todayTasks.length;
     }
@@ -36,8 +50,22 @@
     }
 
     get projects(): IProject[] {
-      console.log(this.$store.state.projects);
       return this.$store.state.projects;
+    }
+
+    private showNewProjectForm() {
+      this.newProjectFormVisible = true;
+    }
+
+    private abortNewProject() {
+      this.newProjectFormVisible = false;
+      this.newProjectName = '';
+    }
+
+    private createNewProject() {
+      this.newProjectFormVisible = false;
+      this.$store.dispatch({type: 'createProject', payload: {name: this.newProjectName, color: this.newProjectColor}});
+      this.newProjectName = '';
     }
   }
 </script>

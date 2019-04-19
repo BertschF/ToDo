@@ -60,6 +60,9 @@ export default new Vuex.Store({
       // works, but the list inside Home.vue is not updated. Need to investigate.
       state.tasks.set(payload.id, payload);
     },
+    createProject(state, payload) {
+      state.projects.push({id: Date.now() + '', name: payload.name, color: payload.color} as IProject);
+    },
   },
   actions: {
     changeTaskState(context, payload: ActionPayload) {
@@ -68,6 +71,9 @@ export default new Vuex.Store({
     },
     createTask(context, payload: ActionPayload) {
       context.commit('createTask', payload.payload as ITask);
+    },
+    createProject(context, payload: ActionPayload) {
+      context.commit('createProject', payload.payload);
     },
   },
 });
