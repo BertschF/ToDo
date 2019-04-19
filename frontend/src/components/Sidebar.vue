@@ -13,7 +13,7 @@
       b-nav-item(v-if="projects === undefined || projects.length === 0" to='projects') Projekte
       .project-wrapper(v-else to='projects')
         p.project-list-title.mb-2 Projekte
-        b-nav-item(v-for="project in projects" :to="{name: 'project', params: {id: project.id}}") {{ project.name }}
+        b-nav-item(v-for="project in projects" :key="project.id" :to="{name: 'project', params: {id: project.id}}") {{ project.name }}
 
 </template>
 
