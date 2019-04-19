@@ -30,6 +30,16 @@ export default new Router({
       component: Home,
     },
     {
+      path: '/projects',
+      name: 'projects',
+      component: Home, // TODO: change this
+    },
+    {
+      path: '/project/:id',
+      name: 'project',
+      component: Home, // TODO: change this
+    },
+    {
       path: '*',
       component: NotFound,
     },

@@ -37,19 +37,20 @@ export default new Vuex.Store({
         dueDate: addDays(new Date(), 1),
       }],
     ]),
-    projects: new Array<IProject>(),
+    projects: new Array<IProject>({id: '1', name: 'SuperDing', color: '#444'} as IProject),
+    // projects: new Array<IProject>(),
     tags: new Array<ITag>(),
   },
   getters: {
     tasks: (state): ITask[] => Array.from(state.tasks.values()),
     openTasks: (_, getters) => getters.tasks
-      .filter((task: ITask) => task.state === State.Open),
+        .filter((task: ITask) => task.state === State.Open),
     overDueTasks: (_, getters) => getters.openTasks
-      .filter((task: ITask) => before(task.dueDate, new Date())),
+        .filter((task: ITask) => before(task.dueDate, new Date())),
     todayTasks: (_, getters) => getters.openTasks
-      .filter((task: ITask) => sameDay(task.dueDate, new Date())),
+        .filter((task: ITask) => sameDay(task.dueDate, new Date())),
     next7DaysTasks: (_, getters) => getters.openTasks
-      .filter((task: ITask) => before(task.dueDate, addDays(new Date(), 7))),
+        .filter((task: ITask) => before(task.dueDate, addDays(new Date(), 7))),
   },
   mutations: {
     changeTaskState(state, payload) {
