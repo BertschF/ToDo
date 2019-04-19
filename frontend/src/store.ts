@@ -37,7 +37,7 @@ export default new Vuex.Store({
         dueDate: addDays(new Date(), 1),
       }],
     ]),
-    projects: new Array<IProject>({id: '1', name: 'SuperDing', color: '#444'} as IProject),
+    projects: new Array<IProject>(),
     // projects: new Array<IProject>(),
     tags: new Array<ITag>(),
   },
