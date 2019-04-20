@@ -34,10 +34,11 @@ export default new Vuex.Store({
         id: '156442',
         description: 'Due Tomorrow',
         state: State.Open,
+        projectId: 'pa1',
         dueDate: addDays(new Date(), 1),
       }],
     ]),
-    projects: new Array<IProject>(),
+    projects: new Array<IProject>({id: 'pa1', name: 'Praxisarbeit', color: '#fff'} as IProject),
     // projects: new Array<IProject>(),
     tags: new Array<ITag>(),
   },
@@ -51,6 +52,9 @@ export default new Vuex.Store({
         .filter((task: ITask) => sameDay(task.dueDate, new Date())),
     next7DaysTasks: (_, getters) => getters.openTasks
         .filter((task: ITask) => before(task.dueDate, addDays(new Date(), 7))),
+    tasksForProject: ((_, getters) => (projectID: string): ITask[] => {
+      return getters.openTasks.filter((task: ITask) => task.projectId === projectID);
+    }),
   },
   mutations: {
     changeTaskState(state, payload) {

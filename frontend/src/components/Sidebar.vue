@@ -14,6 +14,7 @@
       p.center(v-if="projects === undefined || projects.length === 0" to='projects') Noch gibt es kein Projekt.
       .project-wrapper(v-else)
         b-nav-item(v-for="project in projects" :key="project.id" :to="{name: 'project', params: {id: project.id}}") {{ project.name }}
+          span.active-tasks {{ getTasksForProject(project.id).length }}
 
       b-button.mt-2(v-if="!newProjectFormVisible" variant="secondary" @click="showNewProjectForm()") Projekt Hinzufügen
       .new-project-form.mt-2(v-if="newProjectFormVisible")
@@ -52,16 +53,20 @@
       return this.$store.state.projects;
     }
 
-    public showNewProjectForm() {
+    private getTasksForProject(id: string): ITask[] {
+      return this.$store.getters.tasksForProject(id);
+    }
+
+    private showNewProjectForm() {
       this.newProjectFormVisible = true;
     }
 
-    public abortNewProject() {
+    private abortNewProject() {
       this.newProjectFormVisible = false;
       this.newProjectName = '';
     }
 
-    public createNewProject() {
+    private createNewProject() {
       this.newProjectFormVisible = false;
       this.$store.dispatch({type: 'createProject', payload: {name: this.newProjectName, color: this.newProjectColor}});
       this.newProjectName = '';
