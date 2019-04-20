@@ -11,7 +11,6 @@
         TagCreation(v-if="text.type === creationType.Tag" :tag="text.tag")
         ProjectCreation(v-if="text.type === creationType.Project" :project="text.project")
       span(v-else)
-      | Placeholder
 
 </template>
 

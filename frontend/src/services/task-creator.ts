@@ -5,12 +5,11 @@ import {addDays} from './date';
 function initIdentifiers(): Map<string, ICreation> {
     const result = new Map();
 
-    result.set('morgen', new CreationDate(addDays(new Date(Date.now()), 1)));
+    result.set('morgen', new CreationDate(addDays(new Date(), 1)));
     result.set('heute', new CreationDate(new Date()));
     result.set('#health', new CreationProject({ id: '123', name: 'health', color: 'blue' }));
     result.set('@training', new CreationTag({ id: '1223', name: 'training', color: 'yellow' }));
     result.set('@bizeps', new CreationTag({ id: '1234', name: 'bizeps', color: 'green' }));
-
     return result;
 }
 
