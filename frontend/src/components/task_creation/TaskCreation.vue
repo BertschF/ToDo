@@ -1,6 +1,6 @@
 <template lang="pug">
   span
-    div.task-input-field.mb-1(@input="onInput" contenteditable="true")
+    div.task-input-field.mb-1(@input="onInput" contenteditable="true" ref="taskInputField")
       span.special-frields(v-for="text in creation")
         //span(v-if="text.type === creationType.Text") {{text.text}}
         DateCreation(v-if="text.type === creationType.Date" :date="text.date")
@@ -74,6 +74,7 @@
       };
 
       this.$store.dispatch({type: 'createTask', payload: task});
+      (this.$refs.taskInputField as HTMLDivElement).innerText = '';
     }
   }
 </script>
