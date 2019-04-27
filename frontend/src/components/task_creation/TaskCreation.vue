@@ -1,23 +1,26 @@
 <template lang="pug">
   span
-    form.input
-      input.d-block.mb-2.w-75(type="text" required="true" v-model="todoText" @keyup="keyupEvent()")
-      b-button(variant="primary" @click="createTodo()" :disabled="todoText.length === 0") Aufgabe hinzufügen
-    br
-    div(v-model="todoText" @keyup="keyupEvent()" contenteditable="true")
-      span(v-if="creation.length !== 0" v-for="text in creation")
-        span(v-if="text.type === creationType.Text") {{text.text}}
+    div.task-input-field.mb-1(@input="onInput" contenteditable="true")
+      span.special-frields(v-for="text in creation")
+        //span(v-if="text.type === creationType.Text") {{text.text}}
         DateCreation(v-if="text.type === creationType.Date" :date="text.date")
-        TagCreation(v-if="text.type === creationType.Tag" :tag="text.tag")
-        ProjectCreation(v-if="text.type === creationType.Project" :project="text.project")
-      span(v-else)
+        TagCreation(v-else-if="text.type === creationType.Tag" :tag="text.tag")
+        ProjectCreation(v-else-if="text.type === creationType.Project" :project="text.project")
+    b-button(variant="primary" @click="createTodo()" :disabled="creation.length === 0") Aufgabe hinzufügen
 
 </template>
 
 <script lang="ts">
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
-  import {CreationText, CreationType, ICreation, parseTaskString} from '@/services/task-creator';
+  import {
+    CreationDate,
+    CreationProject,
+    CreationTag,
+    CreationType,
+    ICreation,
+    parseTaskString,
+  } from '@/services/task-creator';
   import TagCreation from '@/components/task_creation/TagCreation.vue';
   import ProjectCreation from '@/components/task_creation/ProjectCreation.vue';
   import DateCreation from '@/components/task_creation/DateCreation.vue';
@@ -34,31 +37,55 @@
   export default class TaskCreationComponent extends Vue {
     public readonly creationType = CreationType;
 
-    private todoText: string = '';
-
     private creation: ICreation[] = [];
 
+    private todoText = '';
+
+    private onInput(e: any) {
+      const text = e.target.innerText;
+      this.todoText = text;
+      this.creation = parseTaskString(text);
+    }
+
     private createTodo() {
-      let taskDescription = '';
+      const tags: string[] = [];
+      let project;
+      let dueDate;
+
       this.creation.forEach((value) => {
-        if (value.type === CreationType.Text) {
-          taskDescription += (value as CreationText).text;
+        if (value.type === CreationType.Tag) {
+          tags.push((value as CreationTag).tag.id);
+        }
+        if (value.type === CreationType.Project) {
+          project = (value as CreationProject).project.id;
+        }
+        if (value.type === CreationType.Date) {
+          dueDate = (value as CreationDate).date;
         }
       });
 
       const task: ITask = {
         id: 'aldladls' + Date.now(),
-        description: taskDescription,
-        dueDate: new Date(),
+        description: this.todoText,
         state: State.Open,
+        dueDate,
+        tagIds: tags,
+        projectId: project,
       };
 
       this.$store.dispatch({type: 'createTask', payload: task});
     }
-
-    private keyupEvent() {
-      this.creation = parseTaskString(this.todoText);
-      // parseTaskString('Morgen an Bizep-Curls erinnern #Health @Training @Bizeps Voll wichtig :P');
-    }
   }
 </script>
+
+<style scoped lang="scss">
+  .task-input-field {
+    background-color: white;
+    border: 1px solid lightgray;
+    height: 40px;
+  }
+
+  .special-frields {
+    float: right;
+  }
+</style>

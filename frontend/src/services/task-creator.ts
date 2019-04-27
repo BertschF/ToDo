@@ -65,7 +65,7 @@ export class CreationText implements ICreation {
 }
 
 // tslint:disable-next-line: max-classes-per-file
-class CreationDate implements ICreation {
+export class CreationDate implements ICreation {
     public readonly type = CreationType.Date;
     public readonly date: Date;
 
@@ -75,7 +75,7 @@ class CreationDate implements ICreation {
 }
 
 // tslint:disable-next-line: max-classes-per-file
-class CreationProject implements ICreation {
+export class CreationProject implements ICreation {
     public readonly type = CreationType.Project;
     public readonly project: IProject;
 
@@ -85,7 +85,7 @@ class CreationProject implements ICreation {
 }
 
 // tslint:disable-next-line: max-classes-per-file
-class CreationTag implements ICreation {
+export class CreationTag implements ICreation {
     public readonly type = CreationType.Tag;
     public readonly tag: ITag;
 
