@@ -11,39 +11,36 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    // tasks: new Array<ITask>(),
-    tasks: new Map<string, ITask>([
-      ['129sug9asdfio', {
-        id: '129sug9asdfio',
-        description: 'Backend API implementieren',
-        state: State.Open,
-      }],
-      ['123541', {
-        id: '123541',
-        description: 'overdue task',
-        state: State.Open,
-        dueDate: new Date(2017, 1, undefined, 14),
-      }],
-      ['653', {
-        id: '653',
-        description: 'Due Today',
-        state: State.Open,
-        dueDate: new Date(),
-      }],
-      ['156442', {
-        id: '156442',
-        description: 'Due Tomorrow',
-        state: State.Open,
-        projectId: 'pa1',
-        dueDate: addDays(new Date(), 1),
-      }],
-    ]),
-    projects: new Array<IProject>({id: 'pa1', name: 'Praxisarbeit', color: '#fff'} as IProject),
-    // projects: new Array<IProject>(),
+    tasks: new Array<ITask>(
+        {
+          id: '129sug9asdfio',
+          description: 'Backend API implementieren',
+          state: State.Open,
+        },
+        {
+          id: '123541',
+          description: 'other task',
+          state: State.Open,
+        },
+        {
+          id: '653',
+          description: 'Due Today',
+          state: State.Open,
+          dueDate: new Date(),
+        },
+        {
+          id: '156442',
+          description: 'Due Tomorrow',
+          state: State.Open,
+          projectId: 'pa1',
+          dueDate: addDays(new Date(), 1),
+        },
+    ),
+    projects: new Array<IProject>({id: '123', name: 'Health', color: '#fff'} as IProject),
     tags: new Array<ITag>(),
   },
   getters: {
-    tasks: (state): ITask[] => Array.from(state.tasks.values()),
+    tasks: (state): ITask[] => state.tasks,
     openTasks: (_, getters) => getters.tasks
         .filter((task: ITask) => task.state === State.Open),
     overDueTasks: (_, getters) => getters.openTasks
@@ -58,11 +55,15 @@ export default new Vuex.Store({
   },
   mutations: {
     changeTaskState(state, payload) {
-      (state.tasks.get(payload.taskId) as ITask).state = payload.state;
+      const task = (state.tasks.find((value) => value.id === payload.taskId) as ITask);
+      if (task === undefined) {
+        console.error(`Wasn't able to find task with id ${payload.id} in the store`);
+        return;
+      }
+      task.state = payload.state;
     },
     createTask(state, payload: ITask) {
-      // works, but the list inside Home.vue is not updated. Need to investigate.
-      state.tasks.set(payload.id, payload);
+      state.tasks.push(payload);
     },
     createProject(state, payload) {
       state.projects.push({id: Date.now() + '', name: payload.name, color: payload.color} as IProject);
