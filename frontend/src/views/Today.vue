@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    h2 Alle offenen Aufgaben
+    h2 Heute
     TaskCreation
     TaskList(:tasks="tasks")
 
