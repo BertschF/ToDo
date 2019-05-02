@@ -12,7 +12,6 @@ div
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
-import { IProject } from '../../model/project';
 
 @Component
 export default class ProjectCreationMenuComponent extends Vue {
