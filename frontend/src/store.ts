@@ -52,6 +52,9 @@ export default new Vuex.Store({
     tasksForProject: ((_, getters) => (projectID: string): ITask[] => {
       return getters.openTasks.filter((task: ITask) => task.projectId === projectID);
     }),
+    tasksForTag: ((_, getters) => (tagID: string): ITask[] => {
+      return getters.openTasks.filter((task: ITask) => task.tagIds !== undefined && task.tagIds.indexOf(tagID) !== -1);
+    }),
   },
   mutations: {
     changeTaskState(state, payload) {

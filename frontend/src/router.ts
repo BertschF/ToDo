@@ -4,6 +4,7 @@ import Today from '@/views/task_views/Today.vue';
 import All from '@/views/task_views/All.vue';
 import Upcoming from '@/views/task_views/Upcoming.vue';
 import Project from '@/views/task_views/Project.vue';
+import Tag from '@/views/task_views/Tag.vue';
 import NotFound from '@/views/NotFound.vue';
 
 Vue.use(Router);
@@ -37,14 +38,9 @@ export default new Router({
       component: Project,
     },
     {
-      path: '/tags',
-      name: 'tags',
-      component: Today, // TODO: change this
-    },
-    {
       path: '/tag/:id',
       name: 'tag',
-      component: Today, // TODO: change this
+      component: Tag,
     },
     {
       path: '*',
