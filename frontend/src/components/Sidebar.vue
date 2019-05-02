@@ -15,13 +15,8 @@
       .project-wrapper(v-else)
         b-nav-item(v-for="project in projects" :key="project.id" :to="{name: 'project', params: {id: project.id}}") {{ project.name }}
           span.active-tasks {{ getTasksForProject(project.id).length }}
-
-      b-button.mt-2(v-if="!newProjectFormVisible" variant="secondary" @click="showNewProjectForm()") Projekt Hinzufügen
-      .new-project-form.mt-2(v-if="newProjectFormVisible")
-        input(v-model="newProjectColor" type='color')
-        input.mb-1(v-model.trim="newProjectName" type="text" maxlength="50")
-        b-button(variant="primary" @click="createNewProject()" :disabled="newProjectName && newProjectName.length === 0") Hinzufügen
-        b-button(variant="tertiary" @click="abortNewProject()") Abbrechen
+    
+    ProjectCreationMenu()
 
 </template>
 
@@ -30,13 +25,14 @@
   import {IProject} from '@/model/project';
   import {ITask} from '@/model/task';
   import Component from 'vue-class-component';
+  import ProjectCreationMenu from '@/components/project_creation_menu/ProjectCreationMenu.vue';
 
-  @Component
+  @Component({
+    components: {
+      ProjectCreationMenu,
+    },
+  })
   export default class Sidebar extends Vue {
-    private newProjectFormVisible: boolean = false;
-    private newProjectName: string = '';
-    private newProjectColor: string = '#e66465';
-
     get todayTasksAmount(): ITask[] {
       return this.$store.getters.todayTasks.length;
     }
@@ -55,21 +51,6 @@
 
     private getTasksForProject(id: string): ITask[] {
       return this.$store.getters.tasksForProject(id);
-    }
-
-    private showNewProjectForm() {
-      this.newProjectFormVisible = true;
-    }
-
-    private abortNewProject() {
-      this.newProjectFormVisible = false;
-      this.newProjectName = '';
-    }
-
-    private createNewProject() {
-      this.newProjectFormVisible = false;
-      this.$store.dispatch({type: 'createProject', payload: {name: this.newProjectName, color: this.newProjectColor}});
-      this.newProjectName = '';
     }
   }
 </script>
