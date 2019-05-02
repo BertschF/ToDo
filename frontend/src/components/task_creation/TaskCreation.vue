@@ -44,7 +44,7 @@
     private onInput(e: any) {
       const text = e.target.innerText;
       this.todoText = text;
-      this.creation = parseTaskString(text);
+      this.creation = parseTaskString(text, this.$store.state.projects, this.$store.state.tags);
     }
 
     private createTodo() {

@@ -2,19 +2,20 @@ import {IProject} from '@/model/project';
 import {ITag} from '@/model/tag';
 import {addDays} from './date';
 
-function initIdentifiers(): Map<string, ICreation> {
+function initIdentifiers(projects: IProject[], tags: ITag[]): Map<string, ICreation> {
     const result = new Map();
+
+    projects.forEach((project) => result.set(`#${project.name.toLowerCase()}`, new CreationProject(project)));
+    tags.forEach((tag) => result.set(`@${tag.name.toLowerCase()}`, new CreationTag(tag)));
 
     result.set('morgen', new CreationDate(addDays(new Date(), 1)));
     result.set('heute', new CreationDate(new Date()));
-    result.set('#health', new CreationProject({ id: '123', name: 'health', color: 'blue' }));
-    result.set('@training', new CreationTag({ id: '1223', name: 'training', color: 'yellow' }));
-    result.set('@bizeps', new CreationTag({ id: '1234', name: 'bizeps', color: 'green' }));
+
     return result;
 }
 
-export function parseTaskString(s: string): ICreation[] {
-    const identifier = initIdentifiers();
+export function parseTaskString(s: string, projects: IProject[], tags: ITag[]): ICreation[] {
+    const identifier = initIdentifiers(projects, tags);
     const result: ICreation[] = [];
 
     let leftOver = s.toLowerCase();
