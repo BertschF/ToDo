@@ -10,13 +10,21 @@
 
     .line
     b-nav.wrapper(vertical='')
-      p.project-list-title.mb-2 Projekte
+      p.list-title.mb-2 Projekte
       p.center(v-if="projects === undefined || projects.length === 0" to='projects') Noch gibt es kein Projekt.
       .project-wrapper(v-else)
         b-nav-item(v-for="project in projects" :key="project.id" :to="{name: 'project', params: {id: project.id}}") {{ project.name }}
           span.active-tasks {{ getTasksForProject(project.id).length }}
-    
     ProjectCreationMenu()
+
+    .line
+    b-nav.wrapper(vertical='')
+      p.list-title.mb-2 Tags
+      p.center(v-if="tags === undefined || tags.length === 0" to='tags') Noch gibt es kein Tag.
+      .project-wrapper(v-else)
+        b-nav-item(v-for="tag in tags" :key="tag.id" :to="{name: 'tag', params: {id: tag.id}}") {{ tag.name }}
+          span.active-tasks {{ getTasksForProject(tag.id).length }}
+    TagCreationMenu()
 
 </template>
 
@@ -26,10 +34,12 @@
   import {ITask} from '@/model/task';
   import Component from 'vue-class-component';
   import ProjectCreationMenu from '@/components/sidebar/project_creation_menu/ProjectCreationMenu.vue';
+  import TagCreationMenu from '@/components/sidebar/tag_creation_menu/TagCreationMenu.vue';
 
   @Component({
     components: {
       ProjectCreationMenu,
+      TagCreationMenu,
     },
   })
   export default class Sidebar extends Vue {
@@ -47,6 +57,10 @@
 
     get projects(): IProject[] {
       return this.$store.state.projects;
+    }
+
+    get tags(): IProject[] {
+      return this.$store.state.tags;
     }
 
     private getTasksForProject(id: string): ITask[] {
@@ -76,7 +90,7 @@
     border: 1px solid #a5a5a5;
   }
 
-  .project-list-title {
+  .list-title {
     text-align: center;
   }
   
