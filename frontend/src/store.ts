@@ -72,10 +72,20 @@ export default new Vuex.Store({
     createTag(state, payload) {
       state.tags.push({id: Date.now() + '', name: payload.name, color: payload.color} as IProject);
     },
+    renameProject(state, payload) {
+      const index = state.projects.findIndex(payload.id);
+      const project = state.projects[index];
+      state.projects[index] = {id: project.id, name: payload.name, color: project.color};
+    },
+    renameTag(state, payload) {
+      const index = state.tags.findIndex(payload.id);
+      const tag = state.tags[index];
+      state.tags[index] = {id: tag.id, name: payload.name, color: tag.color};
+    },
   },
   actions: {
+    // actions will perform all occuring http requests
     changeTaskState(context, payload: ActionPayload) {
-      // HTTP Request here
       context.commit('changeTaskState', payload.payload);
     },
     createTask(context, payload: ActionPayload) {
@@ -86,6 +96,12 @@ export default new Vuex.Store({
     },
     createTag(context, payload: ActionPayload) {
       context.commit('createTag', payload.payload);
+    },
+    renameProject(context, payload: ActionPayload) {
+      context.commit('renameProject', payload.payload);
+    },
+    renameTag(context, payload: ActionPayload) {
+      context.commit('renameTag', payload.payload);
     },
   },
 });
