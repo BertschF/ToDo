@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Today from '@/views/Today.vue';
-import All from '@/views/All.vue';
-import Upcoming from '@/views/Upcoming.vue';
+import Today from '@/views/task_views/Today.vue';
+import All from '@/views/task_views/All.vue';
+import Upcoming from '@/views/task_views/Upcoming.vue';
 import NotFound from '@/views/NotFound.vue';
 
 Vue.use(Router);
