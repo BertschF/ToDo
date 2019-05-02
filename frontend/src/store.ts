@@ -49,8 +49,11 @@ export default new Vuex.Store({
         .filter((task: ITask) => sameDay(task.dueDate, new Date())),
     next7DaysTasks: (_, getters) => getters.openTasks
         .filter((task: ITask) => before(task.dueDate, addDays(new Date(), 7))),
-    tasksForProject: ((_, getters) => (projectID: string): ITask[] => {
-      return getters.openTasks.filter((task: ITask) => task.projectId === projectID);
+    projectById: ((state) => (projectId: string): IProject | undefined => {
+      return state.projects.find((project) => project.id === projectId);
+    }),
+    tasksForProject: ((_, getters) => (projectId: string): ITask[] => {
+      return getters.openTasks.filter((task: ITask) => task.projectId === projectId);
     }),
     tasksForTag: ((_, getters) => (tagID: string): ITask[] => {
       return getters.openTasks.filter((task: ITask) => task.tagIds !== undefined && task.tagIds.indexOf(tagID) !== -1);

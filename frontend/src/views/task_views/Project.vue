@@ -36,7 +36,7 @@ export default class UpcomingComponent extends Vue {
   }
 
   private loadProject(id: string) {
-    this.project = (this.$store.state.projects as IProject[]).find((project) => project.id === id);
+    this.project = this.$store.getters.projectById(id);
     this.tasks = this.$store.getters.tasksForProject(id);
   }
 }
