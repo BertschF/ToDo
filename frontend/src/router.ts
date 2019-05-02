@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from '@/views/Home.vue';
+import Today from '@/views/Today.vue';
+import Upcoming from '@/views/Upcoming.vue';
 import NotFound from '@/views/NotFound.vue';
 
 Vue.use(Router);
@@ -12,42 +13,41 @@ export default new Router({
       path: '/',
       name: 'home',
       redirect: '/today',
-      component: Home,
     },
     {
       path: '/today',
-      name: 'home',
-      component: Home,
+      name: 'today',
+      component: Today,
     },
     {
       path: '/upcoming',
-      name: 'home',
-      component: Home,
+      name: 'upcoming',
+      component: Upcoming,
     },
     {
       path: '/all',
       name: 'home',
-      component: Home,
+      component: Today,
     },
     {
       path: '/projects',
       name: 'projects',
-      component: Home, // TODO: change this
+      component: Today, // TODO: change this
     },
     {
       path: '/project/:id',
       name: 'project',
-      component: Home, // TODO: change this
+      component: Today, // TODO: change this
     },
     {
       path: '/tags',
       name: 'tags',
-      component: Home, // TODO: change this
+      component: Today, // TODO: change this
     },
     {
       path: '/tag/:id',
       name: 'tag',
-      component: Home, // TODO: change this
+      component: Today, // TODO: change this
     },
     {
       path: '*',

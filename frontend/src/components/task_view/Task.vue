@@ -28,6 +28,7 @@
   }
 </script>
 
+
 <style lang="scss">
   .finished {
     text-decoration: line-through;

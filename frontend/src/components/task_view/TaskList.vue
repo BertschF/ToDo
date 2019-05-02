@@ -7,8 +7,8 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
-import { ITask } from '../model/task';
-import Task from '@/components/Task.vue';
+import Task from '@/components/task_view/Task.vue';
+import { ITask } from '@/model/task';
 
 @Component({
     components: {
