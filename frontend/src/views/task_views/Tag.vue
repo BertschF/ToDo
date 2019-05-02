@@ -36,7 +36,7 @@ export default class UpcomingComponent extends Vue {
   }
 
   private loadTag(id: string) {
-    this.tag = (this.$store.state.tags as ITag[]).find((tag) => tag.id === id);
+    this.tag = this.$store.getters.tagById(id);
     this.tasks = this.$store.getters.tasksForTag(id);
   }
 }

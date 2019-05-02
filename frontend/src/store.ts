@@ -52,11 +52,14 @@ export default new Vuex.Store({
     projectById: ((state) => (projectId: string): IProject | undefined => {
       return state.projects.find((project) => project.id === projectId);
     }),
+    tagById: ((state) => (tagId: string): ITag | undefined => {
+      return state.tags.find((tag) => tag.id === tagId);
+    }),
     tasksForProject: ((_, getters) => (projectId: string): ITask[] => {
       return getters.openTasks.filter((task: ITask) => task.projectId === projectId);
     }),
-    tasksForTag: ((_, getters) => (tagID: string): ITask[] => {
-      return getters.openTasks.filter((task: ITask) => task.tagIds !== undefined && task.tagIds.indexOf(tagID) !== -1);
+    tasksForTag: ((_, getters) => (tagId: string): ITask[] => {
+      return getters.openTasks.filter((task: ITask) => task.tagIds !== undefined && task.tagIds.indexOf(tagId) !== -1);
     }),
   },
   mutations: {
