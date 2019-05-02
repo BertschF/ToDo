@@ -40,6 +40,16 @@ export default new Router({
       component: Home, // TODO: change this
     },
     {
+      path: '/tags',
+      name: 'tags',
+      component: Home, // TODO: change this
+    },
+    {
+      path: '/tag/:id',
+      name: 'tag',
+      component: Home, // TODO: change this
+    },
+    {
       path: '*',
       component: NotFound,
     },
