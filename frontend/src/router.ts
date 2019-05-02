@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Today from '@/views/Today.vue';
+import All from '@/views/All.vue';
 import Upcoming from '@/views/Upcoming.vue';
 import NotFound from '@/views/NotFound.vue';
 
@@ -26,8 +27,8 @@ export default new Router({
     },
     {
       path: '/all',
-      name: 'home',
-      component: Today,
+      name: 'all',
+      component: All,
     },
     {
       path: '/projects',
