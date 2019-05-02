@@ -57,6 +57,7 @@ export default new Vuex.Store({
     changeTaskState(state, payload) {
       const task = (state.tasks.find((value) => value.id === payload.taskId) as ITask);
       if (task === undefined) {
+        // tslint:disable-next-line:no-console
         console.error(`Wasn't able to find task with id ${payload.id} in the store`);
         return;
       }
