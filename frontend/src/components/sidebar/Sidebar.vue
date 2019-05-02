@@ -23,7 +23,7 @@
       p.center(v-if="tags === undefined || tags.length === 0" to='tags') Noch gibt es kein Tag.
       .project-wrapper(v-else)
         b-nav-item(v-for="tag in tags" :key="tag.id" :to="{name: 'tag', params: {id: tag.id}}") {{ tag.name }}
-          span.active-tasks {{ getTasksForProject(tag.id).length }}
+          span.active-tasks {{ getTasksForTag(tag.id).length }}
     TagCreationMenu()
 
 </template>
@@ -65,6 +65,10 @@
 
     private getTasksForProject(id: string): ITask[] {
       return this.$store.getters.tasksForProject(id);
+    }
+
+    private getTasksForTag(id: string): ITask[] {
+      return this.$store.getters.tasksForTag(id);
     }
   }
 </script>
