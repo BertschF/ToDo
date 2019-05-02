@@ -69,6 +69,9 @@ export default new Vuex.Store({
     createProject(state, payload) {
       state.projects.push({id: Date.now() + '', name: payload.name, color: payload.color} as IProject);
     },
+    createTag(state, payload) {
+      state.tags.push({id: Date.now() + '', name: payload.name, color: payload.color} as IProject);
+    },
   },
   actions: {
     changeTaskState(context, payload: ActionPayload) {
@@ -80,6 +83,9 @@ export default new Vuex.Store({
     },
     createProject(context, payload: ActionPayload) {
       context.commit('createProject', payload.payload);
+    },
+    createTag(context, payload: ActionPayload) {
+      context.commit('createTag', payload.payload);
     },
   },
 });
