@@ -1,8 +1,13 @@
 <template lang="pug">
-  div(v-if="project !== undefined")
+div(v-if="project !== undefined")
+  .d-flex.justify-content-between(v-if="!edit")
     h2 {{ project.name }}
-    TaskCreation
-    TaskList(:tasks="tasks")
+    b-button(variant="primary" @click="startEdit()") Editieren
+  .d-flex.justify-content-between(v-else)
+    input(v-model="editedProjectname")
+    b-button(variant="success" @click="finishEdit()") Speichern
+  TaskCreation
+  TaskList(:tasks="tasks")
 
 </template>
 
@@ -26,8 +31,21 @@ export default class UpcomingComponent extends Vue {
   private project?: IProject = {id: '0', color: '', name: ''};
   private tasks: ITask[] = [];
 
+  private edit = false;
+  private editedProjectname = '';
+
   private mounted() {
     this.loadProject(this.$route.params.id);
+  }
+
+  private startEdit() {
+    this.editedProjectname = this.project!.name;
+    this.edit = true;
+  }
+
+  private finishEdit() {
+    this.$store.dispatch({type: 'renameProject', payload: {id: this.project!.id, name: this.editedProjectname}});
+    this.edit = false;
   }
 
   @Watch('$route')

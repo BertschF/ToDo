@@ -82,12 +82,12 @@ export default new Vuex.Store({
       state.tags.push({id: Date.now() + '', name: payload.name, color: payload.color} as IProject);
     },
     renameProject(state, payload) {
-      const index = state.projects.findIndex(payload.id);
+      const index = state.projects.findIndex((p) => p.id === payload.id);
       const project = state.projects[index];
-      state.projects[index] = {id: project.id, name: payload.name, color: project.color};
+      Vue.set(state.projects, index, {id: project.id, name: payload.name, color: project.color});
     },
     renameTag(state, payload) {
-      const index = state.tags.findIndex(payload.id);
+      const index = state.tags.findIndex((t) => t.id === payload.id);
       const tag = state.tags[index];
       state.tags[index] = {id: tag.id, name: payload.name, color: tag.color};
     },
